@@ -1,4 +1,5 @@
-import importlib, sys
+import importlib
+import sys
 
 
 def check_dependencies() -> bool:
@@ -26,7 +27,7 @@ def check_dependencies() -> bool:
         else:
             print(f'Dependency not found: {package}')
             not_ok += 1
-        
+
     return not_ok == 0
 
 
