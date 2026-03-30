@@ -1,4 +1,5 @@
-import importlib
+import importlib.metadata
+import importlib.util
 import sys
 
 
@@ -20,7 +21,12 @@ def check_dependencies() -> bool:
     for package, message in zip(packages, messages):
         spec = importlib.util.find_spec(package)
         if spec:
-            version = importlib.metadata.version(package)
+            try:
+                version = importlib.metadata.version(package)
+            except importlib.metadata.PackageNotFoundError:
+                print(f'Dependency not found: {package}')
+                not_ok += 1
+                continue
             print(
                 f'[OK] {spec.name} ({version}) - {message}'
             )
@@ -29,6 +35,14 @@ def check_dependencies() -> bool:
             not_ok += 1
 
     return not_ok == 0
+
+
+def compare_pip_poetry() -> None:
+    print('\nDependency manager comparison:')
+    print('pip: installs from requirements.txt (exact versions with ==)')
+    print('poetry: installs from pyproject.toml (version ranges like ^)')
+    print('pip: no lock file required')
+    print('poetry: resolves and locks dependency tree')
 
 
 def analyse_data() -> object:
@@ -63,6 +77,7 @@ def main() -> None:
     print('LOADING STATUS: Loading programs...\n')
 
     deps_ok = check_dependencies()
+    compare_pip_poetry()
 
     if not deps_ok:
         print('\nMissing dependencies! Install with:')

@@ -38,7 +38,7 @@ def outside_venv() -> None:
 
 
 def main() -> None:
-
+    # If prefixes differ, Python is running inside a virtual environment.
     is_venv: bool = (
         sys.prefix != sys.base_prefix
     )
