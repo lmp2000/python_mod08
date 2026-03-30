@@ -31,7 +31,7 @@ def check_dependencies() -> bool:
     return not_ok == 0
 
 
-def analyse_data() -> "pd.DataFrame":
+def analyse_data() -> object:
     import pandas as pd
     import numpy as np
 
@@ -45,7 +45,7 @@ def analyse_data() -> "pd.DataFrame":
     return df
 
 
-def generate_visualization(df: "pd.DataFrame") -> None:
+def generate_visualization(df: object) -> None:
     import matplotlib.pyplot as plt
     dest = 'matrix_analysis.png'
     print('Generating visualization...')

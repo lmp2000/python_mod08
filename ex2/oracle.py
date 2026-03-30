@@ -23,9 +23,12 @@ def display_config(config: dict) -> None:
     print('Configuration loaded:')
     print(f"Mode: {config['MATRIX_MODE']}")
     print("Database: Connected to local instance")
-    print(
-        f"API Access: {'Authenticated' if config['API_KEY'] != 'not_set' else 'Not authenticated'}"
-        )
+    api_access = (
+        'Authenticated'
+        if config['API_KEY'] != 'not_set'
+        else 'Not authenticated'
+    )
+    print(f'API Access: {api_access}')
     print(f"Log Level: {config['LOG_LEVEL']}")
     print("Zion Network: Online")
 
@@ -57,7 +60,10 @@ def check_security(config: dict) -> None:
 if __name__ == '__main__':
     config = load_config()
 
-    if config['MATRIX_MODE'] == 'production' and config['API_KEY'] == 'not_set':
+    if (
+        config['MATRIX_MODE'] == 'production'
+        and config['API_KEY'] == 'not_set'
+    ):
         print('ERROR: API_KEY is required in production!')
         sys.exit(1)
 
